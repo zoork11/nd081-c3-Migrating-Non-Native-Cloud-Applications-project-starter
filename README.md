@@ -64,7 +64,7 @@ Complete a month cost analysis of each Azure resource to give an estimate total 
 Given the resources we need for the migartion of the application to azure we can estimate costs. In my estimation, I assume the total requests for the azure function will be lower than 1 million resulting in no costs for the resource. The application as it is will not consume any meaningful data of the storage account. Therefore I assume that the data on the stoarge account will stay low enough so no costs will occur. I assume that the azure service bus will not process more than 10.000 messages a month, that results in 0.0005 USD per month which are neglectable. I assume that the resources needed for the webapp will stay low enough to fit into the free tier resulting in no costs. The postgres database will result in 25.32 USD costs each month.
 
 | Azure Resource | Service Tier | Cost | Monthly Cost |
-| ------------ | ------------ | ------------ |
+| ------------ | ------------ | ------------ | ------------ |
 | *Azure Postgres Database* | Basic, 1 vCore(s), 5 GB | 25.32 USD / Month                                  | 25.32 USD |
 | *Azure Service Bus*       | Basic                   | 0.05 USD / 1 Million Messages                      | 0.0005 USD |
 | *Azure Web App*           | F1: Free                | 0 USD / Month                                      | 0 USD |
