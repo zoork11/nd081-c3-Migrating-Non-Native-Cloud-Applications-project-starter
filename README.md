@@ -61,11 +61,19 @@ You will need to install the following locally:
 ## Monthly Cost Analysis
 Complete a month cost analysis of each Azure resource to give an estimate total cost using the table below:
 
-| Azure Resource | Service Tier | Monthly Cost |
+Given the resources we need for the migartion of the application to azure we can estimate costs. In my estimation, I assume the total requests for the azure function will be lower than 1 million resulting in no costs for the resource. The application as it is will not consume any meaningful data of the storage account. Therefore I assume that the data on the stoarge account will stay low enough so no costs will occur. I assume that the azure service bus will not process more than 10.000 messages a month, that results in 0.0005 USD per month which are neglectable. I assume that the resources needed for the webapp will stay low enough to fit into the free tier resulting in no costs. The postgres database will result in 25.32 USD costs each month.
+
+| Azure Resource | Service Tier | Cost | Monthly Cost |
 | ------------ | ------------ | ------------ |
-| *Azure Postgres Database* |     |              |
-| *Azure Service Bus*   |         |              |
-| ...                   |         |              |
+| *Azure Postgres Database* | Basic, 1 vCore(s), 5 GB | 25.32 USD / Month                                  | 25.32 USD |
+| *Azure Service Bus*       | Basic                   | 0.05 USD / 1 Million Messages                      | 0.0005 USD |
+| *Azure Web App*           | F1: Free                | 0 USD / Month                                      | 0 USD |
+| *Azure Storage Account*   | StorageV2 Standard/Hot  | 0.021 USD / GB                                     | 0 USD |
+| *Azure Azure Function*    | Consumption Plan        | 0.20 USD / 1 Million requests (first Million free) | 0 USD |
 
 ## Architecture Explanation
 This is a placeholder section where you can provide an explanation and reasoning for your architecture selection for both the Azure Web App and Azure Function.
+
+For the given web application it is the best solution to use a Azure Web App as migration. The application is a python flask app, that means it is supported by Azure Web App and there is no need for further control of the underlying system.
+It is very easy to setup a Azure Web App for the given flask app, the infrastructure will be manged for us and it is the cheaper option. The main versability of a dedicated VM is not needed and also the estimate resources of the Azure Web App will be enough for the given web application. Considering all this Azure Web App is the way to go.
+Looking into the application it self, one time consuming task can be identified that is executed directly on a user request. This can lead to slow responses and an unresponsive web site for users. So it is best to use an Azure Function to execute this task in the background will responding faster. The function that is time consuming is the iteration over every attendee to send mails. This iteration is therefore moved to an Azure Function.

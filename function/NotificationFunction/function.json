@@ -1,0 +1,18 @@
+{
+  "scriptFile": "__init__.py",
+  "bindings": [
+    {
+      "name": "msg",
+      "type": "serviceBusTrigger",
+      "direction": "in",
+      "queueName": "notificationQueue",
+      "connection": "zoorkmigrationbus_SERVICEBUS",
+      "db_host": "db_host",
+      "db_user":"db_user",
+      "db_pw":"db_pw",
+      "db_name":"db_name",
+      "sg_api_key": "sg_api_key",
+      "sg_email": "sg_email"
+    }
+  ]
+}
